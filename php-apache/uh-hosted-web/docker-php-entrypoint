@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- apache2-foreground "$@"
+fi
+
+# Install extra php libraries
+docker-php-ext-install mysqli
+docker-php-ext-enable mysqli
+
+exec "$@"
